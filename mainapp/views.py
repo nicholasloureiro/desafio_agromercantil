@@ -120,7 +120,7 @@ def stocktracker(request):
     hist_df['color_fechamento'] = np.where(hist_df['Close'] < hist_df['Open'], 'red', 'green') # Define a cor de fechamento
     data = hist_df.to_dict(orient='records') # Converte os dados para um dicionário
     
-    # Handle KeyError by checking if the keys exist in the info dictionary
+    # Tratando erros encontrados em certas ações, o dicionário inválido quebra o gráfico
     name = info.get("longName", "N/A")
     industry = info.get("industry", "N/A")
     sector = info.get("sector", "N/A")
