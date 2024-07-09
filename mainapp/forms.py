@@ -14,6 +14,6 @@ class PostsForm(forms.ModelForm):
     
     def clean_ticker(self):
         ticker = self.cleaned_data.get('ticker')
-        if ticker not in tickers_nasdaq():
+        if ticker.upper() not in tickers_nasdaq():
             raise forms.ValidationError("O ticker não está disponível.")
         return ticker
