@@ -1,5 +1,5 @@
-## Aplicação simples feita com DJANGO, permite o usuário procurar ações NASDAQ e fazer, ler, atualizar e deletar comentários sobre as mesmas ##
-# Fiz o deploy da aplicação na AWS, está disponível no endereço http://54.227.113.17:8000/ o endereço está testado, caso não abra, pode ser alguma proteção de rede, então podemos rodar localmente #
+# Aplicação simples feita com DJANGO, permite o usuário procurar ações NASDAQ e fazer, ler, atualizar e deletar comentários sobre as mesmas #
+## Fiz o deploy da aplicação na AWS, está disponível no endereço http://54.227.113.17:8000/ o endereço está testado, caso não abra, pode ser alguma proteção de rede, então podemos rodar localmente ##
 
 # Checklist para rodar o desafio Stocktracker
 
