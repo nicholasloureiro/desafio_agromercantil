@@ -119,13 +119,20 @@ def stocktracker(request):
     hist_df['color_abertura'] = np.where(hist_df['Open'] < hist_df['Close'], 'red', 'green') # Define a cor de abertura
     hist_df['color_fechamento'] = np.where(hist_df['Close'] < hist_df['Open'], 'red', 'green') # Define a cor de fechamento
     data = hist_df.to_dict(orient='records') # Converte os dados para um dicionário
+    
+    # Handle KeyError by checking if the keys exist in the info dictionary
+    name = info.get("longName", "N/A")
+    industry = info.get("industry", "N/A")
+    sector = info.get("sector", "N/A")
+    summary = info.get("longBusinessSummary", "N/A")
+    
     return render(request, 'mainapp/stocktracker.html', { # Renderiza o template com os dados
         "data": data,
         "graph_data": hist_data,
-        "name": info["longName"],
-        "industry": info["industry"],
-        "sector": info["sector"],
-        "summary": info["longBusinessSummary"],
+        "name": name,
+        "industry": industry,
+        "sector": sector,
+        "summary": summary,
         "close": f"{p1: .2f} USD",
         'stockpicker': stock_picker,
         'periods': periods,
