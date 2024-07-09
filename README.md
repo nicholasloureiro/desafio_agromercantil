@@ -7,8 +7,9 @@
 ```sql
 python3 --version
 ```
+![i1](https://github.com/nicholasloureiro/desafio_agromercantil/assets/105894972/eca95ef2-4101-49ad-bdbd-0e92eb3be42e)
 
-![Untitled](Checklist%20para%20rodar%20o%20desafio%20Stocktracker%206135b06ff64343dabf9a0907871cb99f/Untitled.png)
+
 
 - [ ]  Com o python instalado vamos clonar o repositório, com o comando:
 
@@ -29,7 +30,8 @@ python3 -m venv venv
 você deverá ver o escrito (venv) na esquerda do seu terminal
 ```
 
-![Untitled](Checklist%20para%20rodar%20o%20desafio%20Stocktracker%206135b06ff64343dabf9a0907871cb99f/Untitled%201.png)
+![i2](https://github.com/nicholasloureiro/desafio_agromercantil/assets/105894972/b972d56c-b863-43aa-b4c6-61608c2299a6)
+
 
 - [ ]  Hora de instalar os requirements com o comando:
 
