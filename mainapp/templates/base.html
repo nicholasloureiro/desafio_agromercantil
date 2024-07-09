@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}{% endblock %}</title>
+
+	<!-- CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <style>
+    .sidebar {
+        width: 300px; /* Adjust this value to change the width of the sidebar */
+        height: 100vh; /* This will make the sidebar go all the way down */
+        color: #F8F9FA; /* This will make the font color light white */
+    }
+
+    .sidebar .list-group-item {
+        color: #F8F9FA; /* This will make the font color of the buttons light white */
+    }
+    
+    .btn-modern {
+      background-color: #6c757d;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 12px;
+    }
+    {% block css %}{% endblock %} 
+</style>
+</head>
+<body> 
+  <div class="row">
+    <div class="col-3 bg-dark border-right sidebar" id="sidebar-wrapper">
+      <div class="sidebar-heading"></div>
+      <div class="list-group list-group-flush">
+        <a href="http://127.0.0.1:8000/" class="list-group-item list-group-item-action bg-dark">Home</a>
+        <a href="http://127.0.0.1:8000/postlist" class="list-group-item list-group-item-action bg-dark">Comentarios</a>
+        <!-- Add your components here -->
+        <div class="card bg-dark mb-3">
+          <div class="card-body">
+              
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-9">
+      <div class="container mt-3">
+        {% block content %}
+
+        {% endblock %} 
+      </div>
+    </div>
+  </div>
+	
+	<!-- JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>

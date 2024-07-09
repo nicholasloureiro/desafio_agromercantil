@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="{% static 'mainapp/css/base.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+
+    <style>
+        .sidebar {
+            width: 300px; /* Adjust this value to change the width of the sidebar */
+            height: 100vh; /* This will make the sidebar go all the way down */
+            color: #F8F9FA; /* This will make the font color light white */
+        }
+
+        .sidebar .list-group-item {
+            color: #F8F9FA; /* This will make the font color of the buttons light white */
+        }
+
+        .btn-modern {
+            background-color: #6c757d;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+          }
+        {% block css %}{% endblock %} 
+    </style>
+
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div class="bg-dark border-right sidebar" id="sidebar-wrapper">
+        <div class="sidebar-heading"></div>
+        <div class="list-group list-group-flush">
+          <a href="http://127.0.0.1:8000/" class="list-group-item list-group-item-action bg-dark">Home</a>
+          <a href="http://127.0.0.1:8000/postlist" class="list-group-item list-group-item-action bg-dark">Comentarios</a>
+          <!-- Add your components here -->
+          <div class="card bg-dark mb-3">
+            <div class="card-body">
+                <form action="/stocktracker">
+                    <div class="form-group">
+                        <label for="stockpicker">Selecione uma ação:</label>
+                        <select class="form-control" name="stockpicker">
+                            {% for i in stockpicker %}
+                            <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="period">Selecione um período:</label>
+                        <select class="form-control" name="period">
+                            {% for period, period_name in periods.items %}
+                            <option value="{{period}}">{{period_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn-modern" type="submit" value="Ver informaçoes">
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          {% block body %}
+          {% endblock %}
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+  <script></script>
+  {% block js %}
+  {% endblock %} 
+
+</html>
+
+

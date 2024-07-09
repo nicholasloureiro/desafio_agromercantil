@@ -1,0 +1,199 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+{% block title %}
+Stocktracker
+{% endblock %}
+
+{% block css %}
+<style>
+body, html {
+  height: 100%;
+  width: 100%%;
+}
+
+.main-content {
+  width: 100%;
+  min-height: calc(100% - 60px); /* Adjust 60px to the height of your navbar */
+  overflow: auto; /* Add this to enable scrolling inside the main content when needed */
+}
+
+.table-container {
+  width: 100%; /* Adjust this value according to your needs */
+  
+}
+
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
+
+.table-responsive {
+  width: 100%%;
+  max-height: 500px; /* Adjust this value according to your needs */
+ 
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Modern Gray Button */
+.btn-modern {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+/* Text Field for Comments */
+.comment-field {
+  width: 80%; /* Adjust this value according to your needs */
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+.comment-field:focus {
+  border: 3px solid #555;
+}
+
+/* Comment Section */
+.comment-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="col-9 bg-light text-dark overflow-y-scroll main-content" style="max-height: 95vh;"> <!-- Add main-content class here -->
+  <h1 class="text-center">Acompanhe e comente ações</h1>
+  
+  <div class="row p-3">
+      <div class="col-3">
+          <h5 class="text">{{ ticker }}</h5>
+          <p class="text">{{ name }}</p>
+      </div>
+      <div class="col-3">
+          {% if "-" in change %}
+              <h5 class="text-danger">{{ close }}</h5>
+              <p class="text-danger fw-bold">{{ change }}    {{ pct_change }}</p>
+          {% else %}
+              <h5 class="text-success">{{ close }}</h5>
+              <p class="text-success fw-bold">+{{ change }}    {{ pct_change }}</p>
+          {% endif %}
+      </div>
+      <div class="col-3">
+          <h5 class="text">Industry</h5>
+          <p class="text">{{ industry }}</p>
+      </div>
+      <div class="col-3">
+          <h5 class="text">Sector</h5>
+          <p class="text">{{ sector }}</p>
+      </div>
+  </div>
+  
+  <div class="container d-flex justify-content-between"> <!-- Add flexbox here -->
+    <div id="chartdiv"></div>
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Data</th>
+              <th scope="col">Abertura</th>
+              <th scope="col">Fechamento</th>
+              <th scope="col">Max</th>
+              <th scope="col">Min</th>
+              <th scope="col">Volume de transaçoes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in data %}
+            <tr>
+              <td>{{ row.Date|date:"d/m/Y H:i:s" }}</td>
+              <td style="color: {{ row.color_abertura }}">{{ row.Open|floatformat:2  }}</td>
+             <td style="color: {{ row.color_fechamento }}">{{ row.Close|floatformat:2  }}</td>
+              <td>{{ row.High|floatformat:2 }}</td>
+              <td>{{ row.Low|floatformat:2 }}</td>
+              <td>{{ row.Volume|floatformat:0 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comment Section -->
+ <div class="row justify-content-center">
+	<div class="col-md-6">
+		
+		
+		<form method="post" action="{% if request.method == 'POST' %}{% url 'post-create' %}{% endif %}" 
+			enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ form.as_p }} 
+			<button class="btn btn-success" type="submit">Criar</button> 
+		</form>
+
+	</div>
+	
+</div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/dark.js"></script>
+<script>
+am4core.ready(function() {
+    am4core.useTheme(am4themes_animated);
+    var chart = am4core.create("chartdiv", am4charts.XYChart);
+    chart.paddingRight = 20;
+    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+    var data = {{ graph_data|safe }};
+    chart.data = data;
+    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.renderer.grid.template.location = 0;
+    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.tooltip.disabled = true;
+    var series = chart.series.push(new am4charts.CandlestickSeries());
+    series.dataFields.dateX = "Date";
+    series.dataFields.valueY = "Close";
+    series.dataFields.openValueY = "Open";
+    series.dataFields.lowValueY = "Low";
+    series.dataFields.highValueY = "High";
+    series.simplifiedProcessing = true;
+    series.tooltipText = "Open: [bold]{openValueY.value}[/]\nLow: [bold]{lowValueY.value}[/]\nHigh: [bold]{highValueY.value}[/]\nClose: [bold]{valueY.value}[/]";
+    chart.cursor = new am4charts.XYCursor();
+});
+</script>
+{% endblock %}
