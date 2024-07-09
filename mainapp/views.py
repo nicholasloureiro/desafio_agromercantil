@@ -87,10 +87,13 @@ def retrieve_data(ticker, selected_period):
 
 # Função para pegar os dados do gráfico
 def get_graph_data(hist_df):
-    hist_data = hist_df.to_json(orient="records") # Converte os dados históricos para JSON
-    p1, p2 = hist_df["Close"].values[-1], hist_df["Close"].values[-2] # Pega os dois últimos valores de fechamento
-    change, prcnt_change = (p2-p1), (p2-p1) / p1 # Calcula a mudança e a porcentagem de mudança
-    return hist_data, p1, change, prcnt_change
+    try:
+        hist_data = hist_df.to_json(orient="records") # Converte os dados históricos para JSON
+        p1, p2 = hist_df["Close"].values[-1], hist_df["Close"].values[-2] # Pega os dois últimos valores de fechamento
+        change, prcnt_change = (p2-p1), (p2-p1) / p1 # Calcula a mudança e a porcentagem de mudança
+        return hist_data, p1, change, prcnt_change
+    except IndexError:
+        return 0, 0, 0, 0
 
 # Função para rastrear ações
 def stocktracker(request):
