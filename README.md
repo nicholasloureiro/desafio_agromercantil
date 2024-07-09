@@ -1,7 +1,7 @@
 # Aplicação simples feita com DJANGO, permite o usuário procurar ações NASDAQ e fazer, ler, atualizar e deletar comentários sobre as mesmas #
-## Fiz o deploy da aplicação na AWS, está disponível no endereço http://54.227.113.17:8000/ o endereço está testado, caso não abra, pode ser alguma proteção de rede (ou eu baixei o servidor por causa dos custos), abaixo um print da aplicação rodando no IP Público da EC2:
+## Fiz o deploy da aplicação na AWS, está disponível no endereço http://54.227.113.17:8000/ o endereço está testado, caso não abra, pode ser alguma proteção de rede (ou eu baixei o servidor por causa dos custos), abaixo um print da aplicação rodando no IP Público da EC2: ##
 ![site_web](https://github.com/nicholasloureiro/desafio_agromercantil/assets/105894972/f304bed9-1a10-4c57-8677-23e077dcc8e1)
- De qualquer forma, também podemos rodar localmente, comas instruções abaixo ##
+ De qualquer forma, também podemos rodar localmente, com as instruções abaixo 
 
 # Checklist para rodar o desafio Stocktracker
 
